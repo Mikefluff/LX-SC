@@ -1,23 +1,19 @@
 pragma solidity 0.4.8;
 
-import './User.sol';
-import './Owned.sol';
+import './EventsHistoryUser.sol';
 import './Storage.sol';
-import './UserProxy.sol';
-import './EventsHistoryAndStorageUser.sol';
+import './Owned.sol';
+import './User.sol';
 
-contract UserFactory is EventsHistoryAndStorageUser, Owned{
-    StorageInterface.Mapping userRoles;
+contract UserFactory is EventsHistoryUser, Owned {
 
 	event UserCreated(address indexed user, address proxy);
 
-    function UserFactory (Storage _storage, bytes32 _crate) EventsHistoryAndStorageUser(_store, _crate) {
-        userRoles.init('userRoles');
-    }
-
-    function createUserWithProxyAndRecovery(Storage _storage) {
+    function createUserWithProxyAndRecovery(Storage _storage, bytes32 _roles, bytes32 _skills) {
         UserProxy proxy = new UserProxy();
         User user = new User(_storage, 'User');
+        proxy.changeContractOwnership(user);
+        user.claimContractOwnership(proxy);
         user.setUserProxy(proxy);
         UserCreated(user, proxy);
     }

@@ -7,9 +7,10 @@ const EventsHistory = artifacts.require('./EventsHistory.sol');
 const RolesLibrary = artifacts.require('./RolesLibrary.sol');
 const ERC20Library = artifacts.require('./ERC20Library.sol');
 const ManagerMock = artifacts.require('./ManagerMock.sol');
+const UserFactory = artifacts.require('./UserFactory.sol');
 const UserLibrary = artifacts.require('./UserLibrary.sol');
-const Listener = artifacts.require('./Listener.sol');
 const UserProxy = artifacts.require('./UserProxy.sol');
+const Listener = artifacts.require('./Listener.sol');
 const Storage = artifacts.require('./Storage.sol');
 const User = artifacts.require('./User.sol');
 
@@ -28,6 +29,7 @@ module.exports = deployer => {
   .then(() => deployer.deploy(User, Storage.address, 'User'))
   .then(() => deployer.deploy(UserProxy))
   .then(() => deployer.deploy(UserProxyTester))
+  .then(() => deployer.deploy(UserFactory, Storage.address, 'UserFactory'))
   .then(() => deployer.deploy(RolesLibrary, Storage.address, 'RolesLibrary'))
   .then(() => deployer.deploy(UserLibrary, Storage.address, 'UserLibrary'))
   .then(() => deployer.deploy(ERC20Library, Storage.address, 'ERC20Library'))
