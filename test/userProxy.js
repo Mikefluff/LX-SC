@@ -20,28 +20,28 @@ contract('UserProxy', function(accounts) {
   it('should forward calls', () => {
     const someParameter = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
     const data = tester.contract.functionReturningValue.getData(someParameter);
-    return userProxy.forward.call(tester.address, data, false, 0)
+    return userProxy.forward.call(tester.address, 0, data, false)
       .then(result => assert.equal(result, someParameter));
   })
   
   it('should not forward calls when called by not-owner', () => {
     const someParameter = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
     const data = tester.contract.functionReturningValue.getData(someParameter);
-    return userProxy.forward.call(tester.address, data, 0, false, {from: accounts[1]})
+    return userProxy.forward.call(tester.address, 0, data, false, {from: accounts[1]})
       .then(result => assert.equal(result, 0));
   });
 
   it('should throw', () => {
     const someParameter = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff';
     const data = tester.contract.unsuccessfullFunction.getData(someParameter);
-    return userProxy.forward(tester.address, data, 0, true)
+    return userProxy.forward(tester.address, 0, data, true)
       .then(assert.fail, () => true);
   });
 
   it('should emit Forwarded event when forwarded', () => {
     const someParameter = '0x3432000000000000000000000000000000000000000000000000000000000000';
     const data = tester.contract.functionReturningValue.getData(someParameter);
-    return userProxy.forward(tester.address, data, 0, false)
+    return userProxy.forward(tester.address, 0, data, false)
     .then(result => {
       assert.equal(result.logs.length, 1);
       assert.equal(result.logs[0].address, userProxy.address);

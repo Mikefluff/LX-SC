@@ -1,11 +1,8 @@
 pragma solidity 0.4.8;
 
 import './Owned.sol';
+import './UserProxy.sol';
 import './EventsHistoryAndStorageUser.sol';
-
-contract UserProxy {
-    function forward(address destination, bytes data, uint value, bool throwOnFailedCall) returns(bytes32 result);
-}
 
 contract User is EventsHistoryAndStorageUser, Owned {
     StorageInterface.AddressUIntMapping ratingsGiven;
@@ -51,8 +48,8 @@ contract User is EventsHistoryAndStorageUser, Owned {
         return true;
     }
 
-    function forward(address _destination, bytes _data, uint _value, bool _throwOnFailedCall) onlyContractOwner() returns(bytes32) {
-        return userProxy.forward(_destination, _data, _value, _throwOnFailedCall);
+    function forward(address _destination, uint _value, bytes _data, bool _throwOnFailedCall) onlyContractOwner() returns(bytes32) {
+        return userProxy.forward(_destination, _value, _data, _throwOnFailedCall);
     }
 
     function setupEventsHistory(address _eventsHistory) onlyContractOwner() returns(bool) {

@@ -1,6 +1,7 @@
 const EventsHistory = artifacts.require('./EventsHistory.sol');
 const UserFactory = artifacts.require('./UserFactory.sol');
 const Storage = artifacts.require('./Storage.sol');
+const Reverter = require('./helpers/reverter');
 
 contract('UserFactory', function(accounts) {
   const reverter = new Reverter(web3);
@@ -36,4 +37,4 @@ contract('UserFactory', function(accounts) {
   it('should create users and set theirs proxys', () => {
 
   });
-}
+})

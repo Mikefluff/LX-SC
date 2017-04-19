@@ -9,7 +9,7 @@ contract UserProxyTester {
         throw;
     }    
 
-    function forward(address _destination, bytes _data, uint _value, bool _throwOnFailedCall) returns(bytes32){
+    function forward(address _destination, uint _value, bytes _data, bool _throwOnFailedCall) returns(bytes32){
         return 0x3432000000000000000000000000000000000000000000000000000000000000;
     }
 }

@@ -29,7 +29,7 @@ module.exports = deployer => {
   .then(() => deployer.deploy(User, Storage.address, 'User'))
   .then(() => deployer.deploy(UserProxy))
   .then(() => deployer.deploy(UserProxyTester))
-  .then(() => deployer.deploy(UserFactory, Storage.address, 'UserFactory'))
+  .then(() => deployer.deploy(UserFactory))
   .then(() => deployer.deploy(RolesLibrary, Storage.address, 'RolesLibrary'))
   .then(() => deployer.deploy(UserLibrary, Storage.address, 'UserLibrary'))
   .then(() => deployer.deploy(ERC20Library, Storage.address, 'ERC20Library'))
